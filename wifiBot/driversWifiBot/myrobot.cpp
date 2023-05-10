@@ -28,9 +28,9 @@ void MyRobot::doConnect() {
     connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
     qDebug() << "connecting..."; // this is not blocking call
     //socket->connectToHost("LOCALHOST", 15020);
-    socket->connectToHost("192.168.1.106", 15020); // connection to wifibot
+    socket->connectToHost("192.168.10.1", 5001); // connection to wifibot
     // we need to wait...
-    if(!socket->waitForConnected(5000)) {
+    if(!socket->waitForConnected(10000)) {
         qDebug() << "Error: " << socket->errorString();
         return;
     }
