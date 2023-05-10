@@ -41,6 +41,9 @@ Thumbs.db
 # xemacs temporary files
 *.flc
 
+.user
+.fab7477
+
 # Vim temporary files
 .*.swp
 
