@@ -7,12 +7,13 @@
 #include <QDebug>
 #include <QTimer>
 #include <QMutex>
+#include <QString>
 
 class MyRobot : public QObject {
     Q_OBJECT
 public:
     explicit MyRobot(QObject *parent = 0);
-    void doConnect();
+    void doConnect(QString adress, int port);
     void disConnect();
     QByteArray DataToSend;
     QByteArray DataReceived;

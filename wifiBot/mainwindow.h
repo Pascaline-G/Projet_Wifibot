@@ -16,6 +16,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_pBcon_clicked();
+    void on_pbDeco_clicked();
+
 private:
     Ui::MainWindow *ui;
     MyRobot robot;

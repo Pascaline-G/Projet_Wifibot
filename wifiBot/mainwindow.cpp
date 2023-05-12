@@ -7,10 +7,26 @@ MainWindow::MainWindow(QWidget *parent)
     , robot(parent)
 {
     ui->setupUi(this);
-    robot.doConnect();
+
+}
+
+MainWindow::~MainWindow()
+{
+
+    delete ui;
+}
+
+
+void MainWindow::on_pBcon_clicked()
+{
+    QString adress = ui->LEAdresse->text();
+    QString portString = ui->LEPort->text();
+    int port = portString.toInt();
+    robot.doConnect(adress, port);
+
 
     //robot goes straight forward
-    robot.DataToSend[0] = 0xFF;
+    /**robot.DataToSend[0] = 0xFF;
     robot.DataToSend[1] = 0x07;
     robot.DataToSend[2] = 120;
     robot.DataToSend[3] = 0x0;
@@ -18,12 +34,12 @@ MainWindow::MainWindow(QWidget *parent)
     robot.DataToSend[5] = 0x0;
     robot.DataToSend[6] = 80;
     robot.DataToSend[7] = 0x0;
-    robot.DataToSend[8] = 0x0;
+    robot.DataToSend[8] = 0x0;**/
 }
 
-MainWindow::~MainWindow()
+
+void MainWindow::on_pbDeco_clicked()
 {
     robot.disConnect();
-    delete ui;
 }
 
