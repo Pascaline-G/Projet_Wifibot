@@ -18,6 +18,11 @@ public:
     QByteArray DataReceived;
     QMutex Mutex;
 
+    void goForward(char speed);
+    void goBackward(char speed);
+    void goRight(char speed);
+    void goLeft(char speed);
+
 signals:
     void updateUI(const QByteArray Data);
 public slots:
