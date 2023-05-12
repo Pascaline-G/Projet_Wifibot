@@ -34,6 +34,8 @@ public slots:
     void MyTimerSlot();
 
 private:
+    short Crc16(char *tab, unsigned char size) const;
+
     QTcpSocket *socket;
     QTimer *TimerEnvoi;
 };

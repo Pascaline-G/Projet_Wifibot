@@ -45,6 +45,11 @@ void MyRobot::goForward(char speed) {
     DataToSend[4] = speed;
     DataToSend[5] = speed;
     DataToSend[6] = 80;     //control the direction 0101 0000
+
+    short crc = Crc16(DataToSend.data(), 7);
+
+    DataToSend[7] = crc << 4;
+    DataToSend[8] = crc >> 4;
 }
 
 //robot goes straight backward
@@ -56,14 +61,65 @@ void MyRobot::goBackward(char speed) {
     DataToSend[4] = speed;
     DataToSend[5] = speed;
     DataToSend[6] = 0x0;      //control the direction 0000 0000
+
+    short crc = Crc16(DataToSend.data(), 7);
+
+    DataToSend[7] = crc << 4;
+    DataToSend[8] = crc >> 4;
+
 }
 
 void MyRobot::goRight(char speed) {
-    //TODO
+    DataToSend[0] = 0xFF;
+    DataToSend[1] = 0x07;
+    DataToSend[2] = speed;
+    DataToSend[3] = speed;
+    DataToSend[4] = speed;
+    DataToSend[5] = speed;
+    DataToSend[6] = 64;     //control the direction 0100 0000
+
+    short crc = Crc16(DataToSend.data(), 7);
+
+    DataToSend[7] = crc << 4;
+    DataToSend[8] = crc >> 4;
 }
 
 void MyRobot::goLeft(char speed) {
-    //TODO
+    DataToSend[0] = 0xFF;
+    DataToSend[1] = 0x07;
+    DataToSend[2] = speed;
+    DataToSend[3] = speed;
+    DataToSend[4] = speed;
+    DataToSend[5] = speed;
+    DataToSend[6] = 16;     //control the direction 0100 0000
+
+    short crc = Crc16(DataToSend.data(), 7);
+
+    DataToSend[7] = crc << 4;
+    DataToSend[8] = crc >> 4;
+}
+
+//method to calculate crc. Give by documentation
+short MyRobot::Crc16(char *tab, unsigned char size) const {
+    unsigned int crc = 0xFFFF;
+    unsigned int polyome = 0xA001;
+    unsigned int cptOctet = 0;
+    unsigned int cptBit = 0;
+    unsigned int parity = 0;
+
+    for(cptOctet = 0; cptOctet < size; cptOctet++) {
+        crc ^= *(tab + cptOctet);
+        for(cptBit = 0; cptBit <= 7; cptBit++) {
+            parity = crc;
+            crc >>= 1;
+
+            if(parity % 2) {
+                crc ^= polyome;
+            }
+        }
+    }
+
+    return crc;
 }
 
 void MyRobot::disConnect() {
