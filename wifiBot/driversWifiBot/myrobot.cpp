@@ -20,22 +20,50 @@ MyRobot::MyRobot(QObject *parent) : QObject(parent) {
 }
 
 
-void MyRobot::doConnect(QString adress, int port) {
+void MyRobot::doConnect(QString address, int port) {
     socket = new QTcpSocket(this); // socket creation
     connect(socket, SIGNAL(connected()),this, SLOT(connected()));
     connect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
     connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
     connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
     qDebug() << "connecting..."; // this is not blocking call
-    //socket->connectToHost("LOCALHOST", 15020);
-    socket->connectToHost(adress, port); // connection to wifibot
+    socket->connectToHost(address, port); // connection to wifibot
     // we need to wait...
-    if(!socket->waitForConnected(10000)) {
+    if(!socket->waitForConnected(5000)) {
         qDebug() << "Error: " << socket->errorString();
         return;
     }
     TimerEnvoi->start(75);
+}
 
+//robot goes straight fordward
+void MyRobot::goForward(char speed) {
+    DataToSend[0] = 0xFF;
+    DataToSend[1] = 0x07;
+    DataToSend[2] = speed;
+    DataToSend[3] = speed;
+    DataToSend[4] = speed;
+    DataToSend[5] = speed;
+    DataToSend[6] = 80;     //control the direction 0101 0000
+}
+
+//robot goes straight backward
+void MyRobot::goBackward(char speed) {
+    DataToSend[0] = 0xFF;
+    DataToSend[1] = 0x07;
+    DataToSend[2] = speed;
+    DataToSend[3] = speed;
+    DataToSend[4] = speed;
+    DataToSend[5] = speed;
+    DataToSend[6] = 0x0;      //control the direction 0000 0000
+}
+
+void MyRobot::goRight(char speed) {
+    //TODO
+}
+
+void MyRobot::goLeft(char speed) {
+    //TODO
 }
 
 void MyRobot::disConnect() {
