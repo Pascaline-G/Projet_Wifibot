@@ -24,6 +24,8 @@ public:
     void goRight(char speed);
     void goLeft(char speed);
 
+    void stop();
+
 signals:
     void updateUI(const QByteArray Data);
 public slots:

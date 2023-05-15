@@ -53,30 +53,59 @@ void MainWindow::show_Message_Notif(QString message)
     messageBox.setFixedSize(500,200);
 }
 
-void MainWindow::on_pBForward_clicked()
+
+void MainWindow::on_pBForward_pressed()
 {
     robot.goForward(120);
-    qDebug() << "forward clicked";
+    qDebug() << "forward pressed";
 }
 
 
-void MainWindow::on_pbBackward_clicked()
-{
-    robot.goBackward(120);
-    qDebug() << "backward clicked";
-}
-
-
-void MainWindow::on_pbRight_clicked()
-{
-    robot.goRight(120);
-    qDebug() << "right clicked";
-}
-
-
-void MainWindow::on_pbLeft_clicked()
+void MainWindow::on_pbLeft_pressed()
 {
     robot.goLeft(120);
-    qDebug() << "left clicked";
+    qDebug() << "left pressed";
+}
+
+
+void MainWindow::on_pbBackward_pressed()
+{
+    robot.goBackward(120);
+    qDebug() << "backward pressed";
+}
+
+
+void MainWindow::on_pbRight_pressed()
+{
+    robot.goRight(120);
+    qDebug() << "right pressed";
+}
+
+
+void MainWindow::on_pBForward_released()
+{
+    robot.stop();
+    qDebug() << "Stop";
+}
+
+
+void MainWindow::on_pbLeft_released()
+{
+    robot.stop();
+    qDebug() << "Stop";
+}
+
+
+void MainWindow::on_pbRight_released()
+{
+    robot.stop();
+    qDebug() << "Stop";
+}
+
+
+void MainWindow::on_pbBackward_released()
+{
+    robot.stop();
+    qDebug() << "Stop";
 }
 

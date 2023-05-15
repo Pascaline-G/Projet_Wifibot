@@ -22,14 +22,21 @@ private slots:
     void on_pBcon_clicked();
     void on_pbDeco_clicked();
 
+    void on_pBForward_pressed();
 
-    void on_pBForward_clicked();
+    void on_pbLeft_pressed();
 
-    void on_pbBackward_clicked();
+    void on_pbBackward_pressed();
 
-    void on_pbRight_clicked();
+    void on_pbRight_pressed();
 
-    void on_pbLeft_clicked();
+    void on_pBForward_released();
+
+    void on_pbLeft_released();
+
+    void on_pbRight_released();
+
+    void on_pbBackward_released();
 
 private:
     Ui::MainWindow *ui;

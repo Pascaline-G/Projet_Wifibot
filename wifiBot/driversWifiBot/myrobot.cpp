@@ -97,6 +97,20 @@ void MyRobot::goLeft(char speed) {
 
 }
 
+void MyRobot::stop(){
+    DataToSend[0] = 0xFF;
+    DataToSend[1] = 0x07;
+    DataToSend[2] = 0;
+    DataToSend[3] = 0;
+    DataToSend[4] = 0;
+    DataToSend[5] = 0;
+    DataToSend[6] = 0;
+
+    short crc = Crc16(DataToSend.data() + 1, 6);
+    DataToSend[7] = crc & 0x00ff;
+    DataToSend[8] = (crc & 0xff00)>>8;
+}
+
 //method to calculate crc. Give by documentation
 short MyRobot::Crc16(char *tab, unsigned char size) const {
     unsigned int crc = 0xFFFF;
