@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     , robot(parent)
 {
     ui->setupUi(this);
-    this->ui->LEAdresse->text() = "192.168.10.1";
+    this->ui->LEAdresse->setText("192.168.10.1");
 }
 
 MainWindow::~MainWindow()
