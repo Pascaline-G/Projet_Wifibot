@@ -46,10 +46,9 @@ void MyRobot::goForward(char speed) {
     DataToSend[5] = speed;
     DataToSend[6] = 80;     //control the direction 0101 0000
 
-    short crc = Crc16(DataToSend.data(), 7);
-
-    DataToSend[7] = crc << 4;
-    DataToSend[8] = crc >> 4;
+    short crc = Crc16(DataToSend.data() + 1, 6);
+    DataToSend[7] = crc & 0x00ff;
+    DataToSend[8] = (crc & 0xff00)>>8;
 }
 
 //robot goes straight backward
@@ -60,12 +59,11 @@ void MyRobot::goBackward(char speed) {
     DataToSend[3] = speed;
     DataToSend[4] = speed;
     DataToSend[5] = speed;
-    DataToSend[6] = 0x0;      //control the direction 0000 0000
+    DataToSend[6] = 0;      //control the direction 0000 0000
 
-    short crc = Crc16(DataToSend.data(), 7);
-
-    DataToSend[7] = crc << 4;
-    DataToSend[8] = crc >> 4;
+    short crc = Crc16(DataToSend.data() + 1, 6);
+    DataToSend[7] = crc & 0x00ff;
+    DataToSend[8] = (crc & 0xff00)>>8;
 
 }
 
@@ -78,10 +76,10 @@ void MyRobot::goRight(char speed) {
     DataToSend[5] = speed;
     DataToSend[6] = 64;     //control the direction 0100 0000
 
-    short crc = Crc16(DataToSend.data(), 7);
 
-    DataToSend[7] = crc << 4;
-    DataToSend[8] = crc >> 4;
+    short crc = Crc16(DataToSend.data() + 1, 6);
+    DataToSend[7] = crc & 0x00ff;
+    DataToSend[8] = (crc & 0xff00)>>8;
 }
 
 void MyRobot::goLeft(char speed) {
@@ -91,12 +89,12 @@ void MyRobot::goLeft(char speed) {
     DataToSend[3] = speed;
     DataToSend[4] = speed;
     DataToSend[5] = speed;
-    DataToSend[6] = 16;     //control the direction 0100 0000
+    DataToSend[6] = 16;     //control the direction 0001 0000
 
-    short crc = Crc16(DataToSend.data(), 7);
+    short crc = Crc16(DataToSend.data() + 1, 6);
+    DataToSend[7] = crc & 0x00ff;
+    DataToSend[8] = (crc & 0xff00)>>8;
 
-    DataToSend[7] = crc << 4;
-    DataToSend[8] = crc >> 4;
 }
 
 //method to calculate crc. Give by documentation

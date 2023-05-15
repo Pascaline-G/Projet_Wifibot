@@ -31,19 +31,6 @@ void MainWindow::on_pBcon_clicked()
     else{
         this->show_Message_Error("Le port n'est pas un entier !");
     }
-
-
-
-    //robot goes straight forward
-    /**robot.DataToSend[0] = 0xFF;
-    robot.DataToSend[1] = 0x07;
-    robot.DataToSend[2] = 120;
-    robot.DataToSend[3] = 0x0;
-    robot.DataToSend[4] = 120;
-    robot.DataToSend[5] = 0x0;
-    robot.DataToSend[6] = 80;
-    robot.DataToSend[7] = 0x0;
-    robot.DataToSend[8] = 0x0;**/
 }
 
 
@@ -68,24 +55,28 @@ void MainWindow::show_Message_Notif(QString message)
 
 void MainWindow::on_pBForward_clicked()
 {
-
+    robot.goForward(120);
+    qDebug() << "forward clicked";
 }
 
 
 void MainWindow::on_pbBackward_clicked()
 {
-
+    robot.goBackward(120);
+    qDebug() << "backward clicked";
 }
 
 
 void MainWindow::on_pbRight_clicked()
 {
-
+    robot.goRight(120);
+    qDebug() << "right clicked";
 }
 
 
 void MainWindow::on_pbLeft_clicked()
 {
-
+    robot.goLeft(120);
+    qDebug() << "left clicked";
 }
 
