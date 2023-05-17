@@ -5,6 +5,8 @@
 #include "./driversWifiBot/myrobot.h"
 #include <QMessageBox>
 #include <QString.h>
+#include <QMediaPlayer>
+#include <QVideoWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

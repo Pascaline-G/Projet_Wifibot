@@ -8,6 +8,18 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->ui->LEAdresse->setText("192.168.10.1");
+    QMediaPlayer *mp = new QMediaPlayer(0,0);
+    QMediaContent *mc = new QMediaContent(QUrl("http://192.168.1.106:8080/stream_simple.html"));
+    mp->setMedia(*mc);
+    QVideoWidget *vw = new QVideoWidget(this);
+    vw->setMaximumSize(704, 576);
+    vw->setMinimumSize(704, 576);
+
+    mp->setVideoOutput(vw);
+    this->ui->widCamera->
+    vw->show();
+    mp->play();
+
 }
 
 MainWindow::~MainWindow()
