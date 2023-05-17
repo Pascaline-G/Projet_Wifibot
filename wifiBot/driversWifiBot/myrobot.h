@@ -9,6 +9,20 @@
 #include <QMutex>
 #include <QString>
 
+struct SideData {
+    int speedFront;
+    unsigned char IR;
+    unsigned char IR2;
+    long odometry;
+};
+
+struct MyRobotData {
+    SideData dataL;
+    SideData dataR;
+    unsigned char batLevel;
+};
+
+
 class MyRobot : public QObject {
     Q_OBJECT
 public:
@@ -25,6 +39,8 @@ public:
     void goLeft(char speed);
 
     void stop();
+
+    MyRobotData readData() const;
 
 signals:
     void updateUI(const QByteArray Data);

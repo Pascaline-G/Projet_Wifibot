@@ -111,6 +111,30 @@ void MyRobot::stop(){
     DataToSend[8] = (crc & 0xff00)>>8;
 }
 
+MyRobotData MyRobot::readData() const {
+    QByteArray sbuf = DataReceived;
+    MyRobotData robotData = {};
+
+    robotData.dataL.speedFront= (int) ((sbuf[1] << 8) + sbuf[0]);
+    if (robotData.dataL.speedFront > 32767)
+        robotData.dataL.speedFront = robotData.dataL.speedFront - 65536;
+
+    robotData.batLevel = sbuf[2];
+    robotData.dataL.IR = sbuf[3];
+    robotData.dataL.IR2 = sbuf[4];
+    robotData.dataL.odometry = ((((long)sbuf[8] << 24))+(((long)sbuf[7] << 16))+(((long)sbuf[6] << 8))+((long)sbuf[5]));
+
+    robotData.dataR.speedFront= (int) (sbuf[10] << 8) + sbuf[9];
+    if (robotData.dataR.speedFront > 32767)
+        robotData.dataR.speedFront = robotData.dataR.speedFront - 65536;
+
+    robotData.dataR.IR = sbuf[11];
+    robotData.dataR.IR2 = sbuf[12];
+    robotData.dataR.odometry = ((((long)sbuf[16] << 24))+(((long)sbuf[15] << 16))+(((long)sbuf[14] << 8))+((long)sbuf[13]));
+
+    return robotData;
+}
+
 //method to calculate crc. Give by documentation
 short MyRobot::Crc16(char *tab, unsigned char size) const {
     unsigned int crc = 0xFFFF;

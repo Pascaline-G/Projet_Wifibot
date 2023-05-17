@@ -112,6 +112,17 @@ void MainWindow::on_pbBackward_released()
 
 void MainWindow::on_pBAffichInfo_clicked()
 {
+    MyRobotData robotData = robot.readData();
+    QString vitesseL = QString::number(robotData.dataL.speedFront);
+    QString vitesseR = QString::number(robotData.dataR.speedFront);
 
+    this->ui->label_vitesse->setText("(" + vitesseL + ", " + vitesseR  +  ")");
+
+    QString bat = QString::number(robotData.batLevel);
+    this->ui->label_bat->setText(bat);
+
+    QString odometrieL = QString::number(robotData.dataL.odometry);
+    QString odometrieR = QString::number(robotData.dataR.odometry);
+    this->ui->label_odometrie->setText("(" + odometrieL + ", " + odometrieR  +  ")");
 }
 
