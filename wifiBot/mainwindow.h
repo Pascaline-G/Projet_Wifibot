@@ -38,6 +38,8 @@ private slots:
 
     void on_pbBackward_released();
 
+    void on_pBAffichInfo_clicked();
+
 private:
     Ui::MainWindow *ui;
     MyRobot robot;

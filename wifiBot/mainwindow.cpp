@@ -109,3 +109,9 @@ void MainWindow::on_pbBackward_released()
     qDebug() << "Stop";
 }
 
+
+void MainWindow::on_pBAffichInfo_clicked()
+{
+
+}
+
