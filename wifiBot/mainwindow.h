@@ -7,6 +7,8 @@
 #include <QString.h>
 #include <QMediaPlayer>
 #include <QVideoWidget>
+#include <QWebEngineView>
+#include <QWebEngineSettings>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -47,6 +49,7 @@ private:
     MyRobot robot;
     void show_Message_Error(QString message);
     void show_Message_Notif(QString message);
+
 
 };
 #endif // MAINWINDOW_H

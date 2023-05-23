@@ -8,17 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->ui->LEAdresse->setText("192.168.10.1");
-    QMediaPlayer *mp = new QMediaPlayer(0,0);
-    QMediaContent *mc = new QMediaContent(QUrl("http://192.168.1.106:8080/stream_simple.html"));
-    mp->setMedia(*mc);
-    QVideoWidget *vw = new QVideoWidget(this);
-    vw->setMaximumSize(704, 576);
-    vw->setMinimumSize(704, 576);
 
-    mp->setVideoOutput(vw);
-    this->ui->widCamera->
-    vw->show();
-    mp->play();
 
 }
 
@@ -39,6 +29,11 @@ void MainWindow::on_pBcon_clicked()
     if(ok){
         robot.doConnect(adress, port);
         this->show_Message_Notif("Connecter à l'adresse " + adress + ":"+ portString);
+        QWebEngineView *webEngineView = new QWebEngineView(this);
+        webEngineView->resize(500,200);
+        ui->verticalLayout_2->addWidget(webEngineView);
+        webEngineView->load(QUrl("http://" + adress + ":8080/?action=stream"));
+        webEngineView->show();
     }
     else{
         this->show_Message_Error("Le port n'est pas un entier !");
@@ -55,7 +50,7 @@ void MainWindow::show_Message_Error(QString message)
 {
     QMessageBox messageBox;
     messageBox.critical(0,"Erreur","Le port n'est pas un entier");
-    messageBox.setFixedSize(500,200);
+    messageBox.setFixedSize(400,200);
 }
 
 void MainWindow::show_Message_Notif(QString message)
