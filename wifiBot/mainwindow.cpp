@@ -8,22 +8,22 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->ui->LEAdresse->setText("192.168.10.1");
+    timerID = this->startTimer(100);
 }
 
 MainWindow::~MainWindow()
 {
+    this->killTimer(timerID);
     delete ui;
 }
 
 
 void MainWindow::on_pBcon_clicked()
 {
-
     bool ok;
     QString adress = ui->LEAdresse->text();
     QString portString = ui->LEPort->text();
     int port = portString.toInt(&ok);
-    QString message = "Le port n est pas un entier !";
     if(ok){
         robot.doConnect(adress, port);
         this->show_Message_Notif("Connecter à l'adresse " + adress + ":"+ portString);
@@ -109,9 +109,11 @@ void MainWindow::on_pbBackward_released()
     qDebug() << "Stop";
 }
 
+void MainWindow::timerEvent(QTimerEvent *event) {
+    this->updateDisplayDataRobot();
+}
 
-void MainWindow::on_pBAffichInfo_clicked()
-{
+void MainWindow::updateDisplayDataRobot() {
     MyRobotData robotData = robot.readData();
     QString vitesseL = QString::number(robotData.dataL.speedFront);
     QString vitesseR = QString::number(robotData.dataR.speedFront);
@@ -124,5 +126,10 @@ void MainWindow::on_pBAffichInfo_clicked()
     QString odometrieL = QString::number(robotData.dataL.odometry);
     QString odometrieR = QString::number(robotData.dataR.odometry);
     this->ui->label_odometrie->setText("(" + odometrieL + ", " + odometrieR  +  ")");
+}
+
+void MainWindow::on_pBAffichInfo_clicked()
+{
+    this->updateDisplayDataRobot();
 }
 

@@ -17,6 +17,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void updateDisplayDataRobot();
 
 private slots:
     void on_pBcon_clicked();
@@ -40,9 +41,13 @@ private slots:
 
     void on_pBAffichInfo_clicked();
 
+protected:
+    void timerEvent(QTimerEvent *event);
+
 private:
     Ui::MainWindow *ui;
     MyRobot robot;
+    int timerID;
     void show_Message_Error(QString message);
     void show_Message_Notif(QString message);
 
