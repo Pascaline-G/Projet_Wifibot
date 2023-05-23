@@ -5,8 +5,6 @@
 #include "./driversWifiBot/myrobot.h"
 #include <QMessageBox>
 #include <QString.h>
-#include <QMediaPlayer>
-#include <QVideoWidget>
 #include <QWebEngineView>
 #include <QWebEngineSettings>
 

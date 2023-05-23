@@ -14,8 +14,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Multimedia)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS MultimediaWidgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS WebEngineWidgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS WebEngineCore)
+
 
 set(PROJECT_SOURCES
         main.cpp
@@ -51,8 +52,8 @@ endif()
 
 target_link_libraries(wifiBot PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(wifiBot PRIVATE Qt${QT_VERSION_MAJOR}::Network)
-target_link_libraries(wifiBot PRIVATE Qt${QT_VERSION_MAJOR}::Multimedia)
-target_link_libraries(wifiBot PRIVATE Qt${QT_VERSION_MAJOR}::MultimediaWidgets)
+target_link_libraries(wifiBot PRIVATE Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
+target_link_libraries(wifiBot PRIVATE Qt${QT_VERSION_MAJOR}::WebEngineCore)
 
 
 set_target_properties(wifiBot PROPERTIES
