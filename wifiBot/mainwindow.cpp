@@ -27,6 +27,11 @@ void MainWindow::on_pBcon_clicked()
     if(ok){
         robot.doConnect(adress, port);
         this->show_Message_Notif("Connecter à l'adresse " + adress + ":"+ portString);
+        QWebEngineView *webEngineView = new QWebEngineView(this);
+        webEngineView->resize(500,200);
+        ui->verticalLayout_2->addWidget(webEngineView);
+        webEngineView->load(QUrl("http://" + adress + ":8080/?action=stream"));
+        webEngineView->show();
     }
     else{
         this->show_Message_Error("Le port n'est pas un entier !");
@@ -43,7 +48,7 @@ void MainWindow::show_Message_Error(QString message)
 {
     QMessageBox messageBox;
     messageBox.critical(0,"Erreur","Le port n'est pas un entier");
-    messageBox.setFixedSize(500,200);
+    messageBox.setFixedSize(400,200);
 }
 
 void MainWindow::show_Message_Notif(QString message)
