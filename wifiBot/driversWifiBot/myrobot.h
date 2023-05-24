@@ -16,6 +16,8 @@ struct SideData {
     long odometry;
 };
 
+
+//struct to stock data received from robot
 struct MyRobotData {
     SideData dataL;
     SideData dataR;
@@ -27,7 +29,7 @@ class MyRobot : public QObject {
     Q_OBJECT
 public:
     explicit MyRobot(QObject *parent = 0);
-    void doConnect(QString adress, int port);
+    bool doConnect(QString adress, int port);
     void disConnect();
     QByteArray DataToSend;
     QByteArray DataReceived;

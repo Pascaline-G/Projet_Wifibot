@@ -5,33 +5,58 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , robot(parent)
+    , isConnected(false)
+    , webEngineView(new QWebEngineView(this))
 {
     ui->setupUi(this);
-    this->ui->LEAdresse->setText("192.168.10.1");
-    timerID = this->startTimer(100);
+    this->ui->LEAdresse->setText("192.168.1.106");
+    webEngineView->resize(500,200);
+    ui->verticalLayout_2->addWidget(webEngineView);
+
+    //load fake url to show white image on screen. Needed but don't know why
+    webEngineView->load(QUrl(""));
+    webEngineView->show();
 }
 
 MainWindow::~MainWindow()
 {
-    this->killTimer(timerID);
+    if(isConnected) {
+        this->killTimer(timerID);
+        robot.disConnect();
+        isConnected = false;
+        if(webEngineView) {
+            this->webEngineView->stop();
+            //delete webEngineView;
+            //webEngineView = nullptr;
+        }
+    }
     delete ui;
 }
 
 
 void MainWindow::on_pBcon_clicked()
 {
-    bool ok;
     QString adress = ui->LEAdresse->text();
     QString portString = ui->LEPort->text();
+
+    bool ok;
     int port = portString.toInt(&ok);
     if(ok){
-        robot.doConnect(adress, port);
-        this->show_Message_Notif("Connecter à l'adresse " + adress + ":"+ portString);
-        QWebEngineView *webEngineView = new QWebEngineView(this);
-        webEngineView->resize(500,200);
-        ui->verticalLayout_2->addWidget(webEngineView);
-        webEngineView->load(QUrl("http://" + adress + ":8080/?action=stream"));
-        webEngineView->show();
+        //connexion au robot
+        isConnected = robot.doConnect(adress, port);
+        if(isConnected) {
+            this->show_Message_Notif("Connecter à l'adresse " + adress + ":"+ portString);
+
+            //lancement du timer pour update l'ui
+            timerID = this->startTimer(100);
+
+            //récupération et affichage de la caméra
+            webEngineView->load(QUrl("http://" + adress + ":8080/?action=stream"));
+            webEngineView->show();
+        }
+        else {
+            this->show_Message_Error("Impossible de se connecter");
+        }
     }
     else{
         this->show_Message_Error("Le port n'est pas un entier !");
@@ -41,13 +66,23 @@ void MainWindow::on_pBcon_clicked()
 
 void MainWindow::on_pbDeco_clicked()
 {
-    robot.disConnect();
+    if(isConnected) {
+        robot.disConnect();
+        isConnected = false;
+        if(webEngineView) {
+            this->webEngineView->stop();
+
+            //display white screen
+            webEngineView->load(QUrl(""));
+            webEngineView->show();
+        }
+    }
 }
 
 void MainWindow::show_Message_Error(QString message)
 {
     QMessageBox messageBox;
-    messageBox.critical(0,"Erreur","Le port n'est pas un entier");
+    messageBox.critical(0,"Erreur", message);
     messageBox.setFixedSize(400,200);
 }
 
@@ -114,23 +149,26 @@ void MainWindow::on_pbBackward_released()
     qDebug() << "Stop";
 }
 
+//function built in by qt. This update UI every 100millisecond
 void MainWindow::timerEvent(QTimerEvent *event) {
     this->updateDisplayDataRobot();
 }
 
 void MainWindow::updateDisplayDataRobot() {
-    MyRobotData robotData = robot.readData();
-    QString vitesseL = QString::number(robotData.dataL.speedFront);
-    QString vitesseR = QString::number(robotData.dataR.speedFront);
+    if(isConnected) {
+        MyRobotData robotData = robot.readData();
+        QString vitesseL = QString::number(robotData.dataL.speedFront);
+        QString vitesseR = QString::number(robotData.dataR.speedFront);
 
-    this->ui->label_vitesse->setText("(" + vitesseL + ", " + vitesseR  +  ")");
+        this->ui->label_vitesse->setText("(" + vitesseL + ", " + vitesseR  +  ")");
 
-    QString bat = QString::number(robotData.batLevel);
-    this->ui->label_bat->setText(bat);
+        QString bat = QString::number(robotData.batLevel);
+        this->ui->label_bat->setText(bat);
 
-    QString odometrieL = QString::number(robotData.dataL.odometry);
-    QString odometrieR = QString::number(robotData.dataR.odometry);
-    this->ui->label_odometrie->setText("(" + odometrieL + ", " + odometrieR  +  ")");
+        QString odometrieL = QString::number(robotData.dataL.odometry);
+        QString odometrieR = QString::number(robotData.dataR.odometry);
+        this->ui->label_odometrie->setText("(" + odometrieL + ", " + odometrieR  +  ")");
+    }
 }
 
 void MainWindow::on_pBAffichInfo_clicked()

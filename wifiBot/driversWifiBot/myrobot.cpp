@@ -20,7 +20,7 @@ MyRobot::MyRobot(QObject *parent) : QObject(parent) {
 }
 
 
-void MyRobot::doConnect(QString address, int port) {
+bool MyRobot::doConnect(QString address, int port) {
     socket = new QTcpSocket(this); // socket creation
     connect(socket, SIGNAL(connected()),this, SLOT(connected()));
     connect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
@@ -31,9 +31,10 @@ void MyRobot::doConnect(QString address, int port) {
     // we need to wait...
     if(!socket->waitForConnected(5000)) {
         qDebug() << "Error: " << socket->errorString();
-        return;
+        return false;
     }
     TimerEnvoi->start(75);
+    return true;
 }
 
 //robot goes straight fordward
@@ -111,6 +112,7 @@ void MyRobot::stop(){
     DataToSend[8] = (crc & 0xff00)>>8;
 }
 
+//transform data received into struct
 MyRobotData MyRobot::readData() const {
     QByteArray sbuf = DataReceived;
     MyRobotData robotData = {};

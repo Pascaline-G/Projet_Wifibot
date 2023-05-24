@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include "./driversWifiBot/myrobot.h"
 #include <QMessageBox>
-#include <QString.h>
+#include <QString>
 #include <QWebEngineView>
 #include <QWebEngineSettings>
 
@@ -24,23 +24,14 @@ public:
 private slots:
     void on_pBcon_clicked();
     void on_pbDeco_clicked();
-
     void on_pBForward_pressed();
-
     void on_pbLeft_pressed();
-
     void on_pbBackward_pressed();
-
     void on_pbRight_pressed();
-
     void on_pBForward_released();
-
     void on_pbLeft_released();
-
     void on_pbRight_released();
-
     void on_pbBackward_released();
-
     void on_pBAffichInfo_clicked();
 
 protected:
@@ -49,7 +40,9 @@ protected:
 private:
     Ui::MainWindow *ui;
     MyRobot robot;
+    bool isConnected;
     int timerID;
+    QWebEngineView *webEngineView;
     void show_Message_Error(QString message);
     void show_Message_Notif(QString message);
 
