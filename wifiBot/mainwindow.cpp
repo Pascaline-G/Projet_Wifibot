@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     , webEngineView(new QWebEngineView(this))
 {
     ui->setupUi(this);
+    //Set an address
     this->ui->LEAdresse->setText("192.168.1.106");
     webEngineView->resize(500,200);
     ui->verticalLayout_2->addWidget(webEngineView);
@@ -16,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
     //load fake url to show white image on screen. Needed but don't know why
     webEngineView->load(QUrl(""));
     webEngineView->show();
+    
+    timerID = this->startTimer(100);
 }
 
 MainWindow::~MainWindow()
@@ -33,10 +36,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
+//Connection button
 void MainWindow::on_pBcon_clicked()
 {
     QString adress = ui->LEAdresse->text();
+
+    //Check if port input is an int
+    bool ok;
     QString portString = ui->LEPort->text();
 
     bool ok;
@@ -63,7 +69,7 @@ void MainWindow::on_pBcon_clicked()
     }
 }
 
-
+//Deco button
 void MainWindow::on_pbDeco_clicked()
 {
     if(isConnected) {
@@ -79,6 +85,7 @@ void MainWindow::on_pbDeco_clicked()
     }
 }
 
+//Display error message
 void MainWindow::show_Message_Error(QString message)
 {
     QMessageBox messageBox;
@@ -86,6 +93,7 @@ void MainWindow::show_Message_Error(QString message)
     messageBox.setFixedSize(400,200);
 }
 
+//Deplay notification
 void MainWindow::show_Message_Notif(QString message)
 {
     QMessageBox messageBox;
@@ -93,56 +101,56 @@ void MainWindow::show_Message_Notif(QString message)
     messageBox.setFixedSize(500,200);
 }
 
-
+//Go forward button
 void MainWindow::on_pBForward_pressed()
 {
     robot.goForward(120);
     qDebug() << "forward pressed";
 }
 
-
+//Go left Button
 void MainWindow::on_pbLeft_pressed()
 {
     robot.goLeft(120);
     qDebug() << "left pressed";
 }
 
-
+//Go backward button
 void MainWindow::on_pbBackward_pressed()
 {
     robot.goBackward(120);
     qDebug() << "backward pressed";
 }
 
-
+//Go right button
 void MainWindow::on_pbRight_pressed()
 {
     robot.goRight(120);
     qDebug() << "right pressed";
 }
 
-
+//Robot stop
 void MainWindow::on_pBForward_released()
 {
     robot.stop();
     qDebug() << "Stop";
 }
 
-
+//Robot stop
 void MainWindow::on_pbLeft_released()
 {
     robot.stop();
     qDebug() << "Stop";
 }
 
-
+//Robot stop
 void MainWindow::on_pbRight_released()
 {
     robot.stop();
     qDebug() << "Stop";
 }
 
-
+//Robot stop
 void MainWindow::on_pbBackward_released()
 {
     robot.stop();
@@ -154,23 +162,29 @@ void MainWindow::timerEvent(QTimerEvent *event) {
     this->updateDisplayDataRobot();
 }
 
+//Update the display of informations from robot
 void MainWindow::updateDisplayDataRobot() {
+<<<<<<< HEAD
     if(isConnected) {
+        //Display speed
         MyRobotData robotData = robot.readData();
         QString vitesseL = QString::number(robotData.dataL.speedFront);
         QString vitesseR = QString::number(robotData.dataR.speedFront);
 
         this->ui->label_vitesse->setText("(" + vitesseL + ", " + vitesseR  +  ")");
 
+        //Display battery
         QString bat = QString::number(robotData.batLevel);
         this->ui->label_bat->setText(bat);
 
+        //Display odometry
         QString odometrieL = QString::number(robotData.dataL.odometry);
         QString odometrieR = QString::number(robotData.dataR.odometry);
         this->ui->label_odometrie->setText("(" + odometrieL + ", " + odometrieR  +  ")");
     }
 }
 
+//Depreciated : Button Update the display of informations from robot
 void MainWindow::on_pBAffichInfo_clicked()
 {
     this->updateDisplayDataRobot();
