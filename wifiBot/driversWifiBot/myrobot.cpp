@@ -38,12 +38,12 @@ void MyRobot::doConnect(QString address, int port) {
 
 //robot goes straight fordward
 void MyRobot::goForward(char speed) {
-    DataToSend[0] = 0xFF;
-    DataToSend[1] = 0x07;
-    DataToSend[2] = speed;
-    DataToSend[3] = speed;
-    DataToSend[4] = speed;
-    DataToSend[5] = speed;
+    DataToSend[0] = 0xFF; //Const
+    DataToSend[1] = 0x07; //Const
+    DataToSend[2] = speed; //Right speed
+    DataToSend[3] = speed; //Right speed
+    DataToSend[4] = speed; //Right speed
+    DataToSend[5] = speed; //Right speed
     DataToSend[6] = 80;     //control the direction 0101 0000
 
     short crc = Crc16(DataToSend.data() + 1, 6);
@@ -53,12 +53,12 @@ void MyRobot::goForward(char speed) {
 
 //robot goes straight backward
 void MyRobot::goBackward(char speed) {
-    DataToSend[0] = 0xFF;
-    DataToSend[1] = 0x07;
-    DataToSend[2] = speed;
-    DataToSend[3] = speed;
-    DataToSend[4] = speed;
-    DataToSend[5] = speed;
+    DataToSend[0] = 0xFF; //Const
+    DataToSend[1] = 0x07; //Const
+    DataToSend[2] = speed; //Left speed
+    DataToSend[3] = speed; //Left speed
+    DataToSend[4] = speed; //Right speed
+    DataToSend[5] = speed; //Right speed
     DataToSend[6] = 0;      //control the direction 0000 0000
 
     short crc = Crc16(DataToSend.data() + 1, 6);
@@ -68,12 +68,12 @@ void MyRobot::goBackward(char speed) {
 }
 
 void MyRobot::goRight(char speed) {
-    DataToSend[0] = 0xFF;
-    DataToSend[1] = 0x07;
-    DataToSend[2] = speed;
-    DataToSend[3] = speed;
-    DataToSend[4] = speed;
-    DataToSend[5] = speed;
+    DataToSend[0] = 0xFF; //Const
+    DataToSend[1] = 0x07; //Const
+    DataToSend[2] = speed; //Left speed
+    DataToSend[3] = speed; //Left speed
+    DataToSend[4] = speed; //Right speed
+    DataToSend[5] = speed; //Right speed
     DataToSend[6] = 64;     //control the direction 0100 0000
 
 
@@ -83,12 +83,12 @@ void MyRobot::goRight(char speed) {
 }
 
 void MyRobot::goLeft(char speed) {
-    DataToSend[0] = 0xFF;
-    DataToSend[1] = 0x07;
-    DataToSend[2] = speed;
-    DataToSend[3] = speed;
-    DataToSend[4] = speed;
-    DataToSend[5] = speed;
+    DataToSend[0] = 0xFF; //Const
+    DataToSend[1] = 0x07; //Const
+    DataToSend[2] = speed; //Left speed
+    DataToSend[3] = speed; //Left speed
+    DataToSend[4] = speed; //Right speed
+    DataToSend[5] = speed; //Right speed
     DataToSend[6] = 16;     //control the direction 0001 0000
 
     short crc = Crc16(DataToSend.data() + 1, 6);
@@ -98,38 +98,46 @@ void MyRobot::goLeft(char speed) {
 }
 
 void MyRobot::stop(){
-    DataToSend[0] = 0xFF;
-    DataToSend[1] = 0x07;
-    DataToSend[2] = 0;
-    DataToSend[3] = 0;
-    DataToSend[4] = 0;
-    DataToSend[5] = 0;
-    DataToSend[6] = 0;
+    DataToSend[0] = 0xFF; //Const
+    DataToSend[1] = 0x07; //Const
+    DataToSend[2] = 0; //Left speed
+    DataToSend[3] = 0; //Left speed
+    DataToSend[4] = 0; //Right speed
+    DataToSend[5] = 0; //Right speed
+    DataToSend[6] = 0; // control the direction 0000 0000
 
     short crc = Crc16(DataToSend.data() + 1, 6);
     DataToSend[7] = crc & 0x00ff;
     DataToSend[8] = (crc & 0xff00)>>8;
 }
 
+//Read datas send by the robot
 MyRobotData MyRobot::readData() const {
     QByteArray sbuf = DataReceived;
     MyRobotData robotData = {};
 
+    //Left Side
+
+    //Vitess
     robotData.dataL.speedFront= (int) ((sbuf[1] << 8) + sbuf[0]);
+    //Normalisation
     if (robotData.dataL.speedFront > 32767)
         robotData.dataL.speedFront = robotData.dataL.speedFront - 65536;
 
-    robotData.batLevel = sbuf[2];
+    robotData.batLevel = sbuf[2]; //Battery
     robotData.dataL.IR = sbuf[3];
     robotData.dataL.IR2 = sbuf[4];
+    //Double on 4octets
     robotData.dataL.odometry = ((((long)sbuf[8] << 24))+(((long)sbuf[7] << 16))+(((long)sbuf[6] << 8))+((long)sbuf[5]));
 
+    //Right Side
     robotData.dataR.speedFront= (int) (sbuf[10] << 8) + sbuf[9];
     if (robotData.dataR.speedFront > 32767)
         robotData.dataR.speedFront = robotData.dataR.speedFront - 65536;
 
     robotData.dataR.IR = sbuf[11];
     robotData.dataR.IR2 = sbuf[12];
+    //Double on 4octets
     robotData.dataR.odometry = ((((long)sbuf[16] << 24))+(((long)sbuf[15] << 16))+(((long)sbuf[14] << 8))+((long)sbuf[13]));
 
     return robotData;
