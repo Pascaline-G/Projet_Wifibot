@@ -16,6 +16,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS WebEngineWidgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS WebEngineCore)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui)
 
 
 set(PROJECT_SOURCES
@@ -54,6 +55,7 @@ target_link_libraries(wifiBot PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(wifiBot PRIVATE Qt${QT_VERSION_MAJOR}::Network)
 target_link_libraries(wifiBot PRIVATE Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
 target_link_libraries(wifiBot PRIVATE Qt${QT_VERSION_MAJOR}::WebEngineCore)
+target_link_libraries(wifiBot PRIVATE Qt${QT_VERSION_MAJOR}::Gui)
 
 
 set_target_properties(wifiBot PROPERTIES

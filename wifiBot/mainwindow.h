@@ -7,6 +7,7 @@
 #include <QString>
 #include <QWebEngineView>
 #include <QWebEngineSettings>
+#include <QKeyEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -45,6 +46,8 @@ private:
     QWebEngineView *webEngineView;
     void show_Message_Error(QString message);
     void show_Message_Notif(QString message);
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 
 
 };

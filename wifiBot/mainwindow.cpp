@@ -10,6 +10,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->ui->LEAdresse->setText("192.168.1.106");
+    this->ui->LEPort->setText("15020");
+    AllowControleKeyboard(this->ui->centralwidget);
 }
 
 MainWindow::~MainWindow()
@@ -28,11 +30,19 @@ MainWindow::~MainWindow()
 }
 
 
+void MainWindow::AllowControleKeyboard(QObject *object){
+    const QObjectList &localChildren = object->children();
+
+    foreach (QObject *obj, localChildren) {
+        obj->installEventFilter(this);
+        AllowControleKeyboard(obj);
+    }
+}
+
 void MainWindow::on_pBcon_clicked()
 {
     QString adress = ui->LEAdresse->text();
     QString portString = ui->LEPort->text();
-
     bool ok;
     int port = portString.toInt(&ok);
     if(ok){
@@ -178,3 +188,61 @@ void MainWindow::on_pBAffichInfo_clicked()
     this->updateDisplayDataRobot();
 }
 
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *e){
+
+    if(e->type() == QEvent::KeyPress){
+
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
+        HandleKeyPress(keyEvent);
+    }
+    if(e->type() == QEvent::KeyRelease){
+
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
+        handleKeyRelease(keyEvent);
+    }
+    return false;
+}
+
+void MainWindow::HandleKeyPress(QKeyEvent *event)
+{
+    switch(event->key())
+    {
+    case 16777235:
+        qDebug("Go UP");
+        robot.goForward(120);
+        break;
+    case 16777237:
+        qDebug("Go Down");
+        robot.goBackward(120);
+        break;
+    case Qt::LeftArrow : case 16777234:
+        qDebug("Go left");
+        robot.goLeft(120);
+        break;
+    case 16777236:
+        qDebug("Go right");
+        robot.goRight(120);
+        break;
+    default:
+        qDebug("Key pressed not implemented");
+        break;
+    }
+    if(event->key() == 16777234){
+        qDebug("Go left");
+    }
+}
+
+void MainWindow::handleKeyRelease(QKeyEvent *event)
+{
+    qDebug() << event->key();
+    switch(event->key())
+    {
+    case 16777234 : case 16777235 : case 16777237 : case 16777236:
+        robot.stop();
+        break;
+    default:
+        qDebug("Key released not implemented");
+        break;
+    }
+}
