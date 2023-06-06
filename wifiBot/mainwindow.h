@@ -46,8 +46,10 @@ private:
     QWebEngineView *webEngineView;
     void show_Message_Error(QString message);
     void show_Message_Notif(QString message);
-    void keyPressEvent(QKeyEvent *event);
-    void keyReleaseEvent(QKeyEvent *event);
+    bool eventFilter(QObject *obj, QEvent *e);
+    void AllowControleKeyboard(QObject *object);
+    void HandleKeyPress(QKeyEvent *event);
+    void handleKeyRelease(QKeyEvent *event);
 
 
 };
