@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     AllowControleKeyboard(this->ui->centralwidget);
 }
 
+//object destructor to free memory
 MainWindow::~MainWindow()
 {
     if(isConnected) {
@@ -30,6 +31,7 @@ MainWindow::~MainWindow()
 }
 
 
+//function who set a callback, to each object in the ui, to catch keyboard input
 void MainWindow::AllowControleKeyboard(QObject *object){
     const QObjectList &localChildren = object->children();
 
@@ -39,6 +41,7 @@ void MainWindow::AllowControleKeyboard(QObject *object){
     }
 }
 
+//Bouton de connexion
 void MainWindow::on_pBcon_clicked()
 {
     QString adress = ui->LEAdresse->text();
@@ -54,6 +57,7 @@ void MainWindow::on_pBcon_clicked()
             //lancement du timer pour update l'ui
             timerID = this->startTimer(100);
 
+            //supression de l'ancien webEngine avant d'en créer un nouveau
             if(webEngineView) {
                 ui->verticalLayout_2->removeWidget(webEngineView);
                 delete webEngineView;
