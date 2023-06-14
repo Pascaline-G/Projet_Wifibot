@@ -26,6 +26,9 @@ set(PROJECT_SOURCES
         mainwindow.ui
         driversWifiBot/myrobot.h
         driversWifiBot/myrobot.cpp
+        controleimage.h
+        controleimage.cpp
+        controleimage.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
