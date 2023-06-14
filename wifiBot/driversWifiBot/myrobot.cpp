@@ -15,6 +15,7 @@ MyRobot::MyRobot(QObject *parent) : QObject(parent) {
     DataToSend[8] = 0x0;
     DataReceived.resize(21);
     TimerEnvoi = new QTimer();
+    manager = new QNetworkAccessManager(this);
     // setup signal and slot
     connect(TimerEnvoi, SIGNAL(timeout()), this, SLOT(MyTimerSlot())); //Send data to wifibot timer
 }
@@ -198,3 +199,16 @@ void MyRobot::MyTimerSlot() {
     Mutex.unlock();
 }
 
+void MyRobot::MoveCamRight(){
+    manager->get(QNetworkRequest(QUrl("http://192.168.1.106:8080/?action=command&dest=0&plugin=0&id=10094852&group=1&value=-200")));
+}
+
+void MyRobot::MoveCamLeft(){
+    manager->get(QNetworkRequest(QUrl("http://192.168.1.106:8080/?action=command&dest=0&plugin=0&id=10094852&group=1&value=200")));
+}
+void MyRobot::MoveCamUp(){
+    manager->get(QNetworkRequest(QUrl("http://192.168.1.106:8080/?action=command&dest=0&plugin=0&id=10094853&group=1&value=-200")));
+}
+void MyRobot::MoveCamDown(){
+    manager->get(QNetworkRequest(QUrl("http://192.168.1.106:8080/?action=command&dest=0&plugin=0&id=10094853&group=1&value=200")));
+}

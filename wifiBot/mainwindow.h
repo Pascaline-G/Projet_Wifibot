@@ -35,6 +35,14 @@ private slots:
     void on_pbBackward_released();
     void on_pBAffichInfo_clicked();
 
+    void on_pBMoveCamUp_clicked();
+
+    void on_pBMoveCamRight_clicked();
+
+    void on_pBMoveCamDown_clicked();
+
+    void on_pBMoveCamLeft_clicked();
+
 protected:
     void timerEvent(QTimerEvent *event);
 
