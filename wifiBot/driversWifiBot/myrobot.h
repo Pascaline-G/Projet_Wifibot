@@ -30,6 +30,7 @@ class MyRobot : public QObject {
     Q_OBJECT
 public:
     explicit MyRobot(QObject *parent = 0);
+    ~MyRobot();
     bool doConnect(QString adress, int port);
     void disConnect();
     QByteArray DataToSend;

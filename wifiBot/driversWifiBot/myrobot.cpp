@@ -20,6 +20,13 @@ MyRobot::MyRobot(QObject *parent) : QObject(parent) {
     connect(TimerEnvoi, SIGNAL(timeout()), this, SLOT(MyTimerSlot())); //Send data to wifibot timer
 }
 
+MyRobot::~MyRobot() {
+    if(manager) {
+        delete manager;
+        manager = nullptr;
+    }
+}
+
 
 bool MyRobot::doConnect(QString address, int port) {
     socket = new QTcpSocket(this); // socket creation
