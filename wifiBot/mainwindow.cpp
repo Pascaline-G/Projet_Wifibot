@@ -29,7 +29,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
+//Permet de controler le robot avec le clavier
 void MainWindow::AllowControleKeyboard(QObject *object){
     const QObjectList &localChildren = object->children();
 
@@ -39,6 +39,7 @@ void MainWindow::AllowControleKeyboard(QObject *object){
     }
 }
 
+//Connexion avec le robot en cliquant sur le bouton
 void MainWindow::on_pBcon_clicked()
 {
     QString adress = ui->LEAdresse->text();
@@ -75,7 +76,7 @@ void MainWindow::on_pBcon_clicked()
     }
 }
 
-
+//Deconnexion avec le robot en cliquant sur le bouton
 void MainWindow::on_pbDeco_clicked()
 {
     if(isConnected) {
@@ -109,6 +110,7 @@ void MainWindow::show_Message_Notif(QString message)
 void MainWindow::on_pBForward_pressed()
 {
     robot.goForward(120);
+    robot.MoveCamRight();
     qDebug() << "forward pressed";
 }
 
@@ -246,3 +248,27 @@ void MainWindow::handleKeyRelease(QKeyEvent *event)
         break;
     }
 }
+
+void MainWindow::on_pBMoveCamUp_clicked()
+{
+    robot.MoveCamUp();
+}
+
+
+void MainWindow::on_pBMoveCamRight_clicked()
+{
+    robot.MoveCamRight();
+}
+
+
+void MainWindow::on_pBMoveCamDown_clicked()
+{
+    robot.MoveCamDown();
+}
+
+
+void MainWindow::on_pBMoveCamLeft_clicked()
+{
+    robot.MoveCamLeft();
+}
+

@@ -8,6 +8,7 @@
 #include <QTimer>
 #include <QMutex>
 #include <QString>
+#include <QNetworkAccessManager>
 
 struct SideData {
     int speedFront;
@@ -42,6 +43,11 @@ public:
 
     void stop();
 
+    void MoveCamRight();
+    void MoveCamLeft();
+    void MoveCamUp();
+    void MoveCamDown();
+
     MyRobotData readData() const;
 
 signals:
@@ -55,7 +61,7 @@ public slots:
 
 private:
     short Crc16(char *tab, unsigned char size) const;
-
+    QNetworkAccessManager *manager;
     QTcpSocket *socket;
     QTimer *TimerEnvoi;
 };
