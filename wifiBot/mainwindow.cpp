@@ -174,12 +174,22 @@ void MainWindow::updateDisplayDataRobot() {
 
         this->ui->label_vitesse->setText("(" + vitesseL + ", " + vitesseR  +  ")");
 
-        QString bat = QString::number(robotData.batLevel);
+        float batLevel = (robotData.batLevel / 255.0) * 100.0;
+        QString bat = QString::number(batLevel);
         this->ui->label_bat->setText(bat);
 
         QString odometrieL = QString::number(robotData.dataL.odometry);
         QString odometrieR = QString::number(robotData.dataR.odometry);
         this->ui->label_odometrie->setText("(" + odometrieL + ", " + odometrieR  +  ")");
+
+        QString infraL1 = QString::number(robotData.dataL.IR);
+        QString infraL2 = QString::number(robotData.dataL.IR2);
+
+        QString infraR1 = QString::number(robotData.dataR.IR);
+        QString infraR2 = QString::number(robotData.dataR.IR2);
+
+
+        this->ui->label_infra->setText("(" + infraL1 + ", " + infraL2 + ", " + infraR1 + ", " + infraR2 +  ")");
     }
 }
 
