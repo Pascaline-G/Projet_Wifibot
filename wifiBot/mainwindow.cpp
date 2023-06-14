@@ -174,14 +174,20 @@ void MainWindow::timerEvent(QTimerEvent *event) {
 void MainWindow::updateDisplayDataRobot() {
     if(isConnected) {
         MyRobotData robotData = robot.readData();
-        QString vitesseL = QString::number(robotData.dataL.speedFront);
-        QString vitesseR = QString::number(robotData.dataR.speedFront);
-
-        this->ui->label_vitesse->setText("(" + vitesseL + ", " + vitesseR  +  ")");
 
         float batLevel = (robotData.batLevel / 255.0) * 100.0;
         QString bat = QString::number(batLevel);
         this->ui->label_bat->setText(bat);
+
+        long odo_diff_l = robotData.dataL.odometry - robotData.dataL.previousOdometry;
+        long odo_diff_r = robotData.dataR.odometry - robotData.dataR.previousOdometry;
+        float time = 0.1; //100ms
+        float dist_tic = 0.44/2048.0;
+
+        QString vitesseL = QString::number(odo_diff_l * dist_tic / time);
+        QString vitesseR = QString::number(odo_diff_r * dist_tic / time);
+
+        this->ui->label_vitesse->setText("(" + vitesseL + "m/s, " + vitesseR  +  "m/s)");
 
         QString odometrieL = QString::number(robotData.dataL.odometry);
         QString odometrieR = QString::number(robotData.dataR.odometry);

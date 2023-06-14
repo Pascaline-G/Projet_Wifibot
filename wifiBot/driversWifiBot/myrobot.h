@@ -15,6 +15,7 @@ struct SideData {
     unsigned char IR;
     unsigned char IR2;
     long odometry;
+    long previousOdometry;
 };
 
 

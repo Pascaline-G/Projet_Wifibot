@@ -136,7 +136,8 @@ MyRobotData MyRobot::readData() const {
     robotData.batLevel = sbuf[2]; //Battery
     robotData.dataL.IR = sbuf[3];
     robotData.dataL.IR2 = sbuf[4];
-    //Double on 4 bytes
+
+    robotData.dataL.previousOdometry = robotData.dataL.odometry;
     robotData.dataL.odometry = ((((long)sbuf[8] << 24))+(((long)sbuf[7] << 16))+(((long)sbuf[6] << 8))+((long)sbuf[5]));
 
     //Right Side
@@ -146,7 +147,8 @@ MyRobotData MyRobot::readData() const {
 
     robotData.dataR.IR = sbuf[11];
     robotData.dataR.IR2 = sbuf[12];
-    //Double on 4 bytes
+
+    robotData.dataR.previousOdometry = robotData.dataR.odometry;
     robotData.dataR.odometry = ((((long)sbuf[16] << 24))+(((long)sbuf[15] << 16))+(((long)sbuf[14] << 8))+((long)sbuf[13]));
 
     return robotData;
