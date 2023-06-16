@@ -208,18 +208,20 @@ void MainWindow::updateDisplayDataRobot() {
         QString infraR1 = QString::number(robotData.dataR.IR);
         QString infraR2 = QString::number(robotData.dataR.IR2);
 
-        //Affichage des donnée
+        //Affichage des données
         this->ui->label_infra->setText("(" + infraL1 + ", " + infraL2 + ", " + infraR1 + ", " + infraR2 +  ")");
     }
 }
 
 
+//Bouton de mise à jour manuelle de l'affichage des données du Robot
 void MainWindow::on_pBAffichInfo_clicked()
 {
     this->updateDisplayDataRobot();
 }
 
 
+//Permet de filtrer les évenements et donc les input du clavier en fonction de leur type (pressé ou relaché)
 bool MainWindow::eventFilter(QObject *obj, QEvent *e){
 
     if(e->type() == QEvent::KeyPress){
@@ -235,6 +237,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *e){
     return false;
 }
 
+//Gèrent qu'elle action effectuer en fonction de la touche du clavier qui est pressée
 void MainWindow::HandleKeyPress(QKeyEvent *event)
 {
     switch(event->key())
@@ -264,6 +267,7 @@ void MainWindow::HandleKeyPress(QKeyEvent *event)
     }
 }
 
+//Gèrent qu'elle action effectuer en fonction de la touche du clavier qui est relachée
 void MainWindow::handleKeyRelease(QKeyEvent *event)
 {
     qDebug() << event->key();
@@ -278,30 +282,35 @@ void MainWindow::handleKeyRelease(QKeyEvent *event)
     }
 }
 
+//Bouton pour bouger la caméra vers le haut
 void MainWindow::on_pBMoveCamUp_clicked()
 {
     robot.MoveCamUp();
 }
 
 
+//Bouton pour bouger la caméra vers la droite
 void MainWindow::on_pBMoveCamRight_clicked()
 {
     robot.MoveCamRight();
 }
 
 
+//Bouton pour bouger la caméra vers le bas
 void MainWindow::on_pBMoveCamDown_clicked()
 {
     robot.MoveCamDown();
 }
 
 
+//Bouton pour bouger la caméra vers la gauche
 void MainWindow::on_pBMoveCamLeft_clicked()
 {
     robot.MoveCamLeft();
 }
 
 
+//Bouton pour afficher une nouvelle fenêtre pour modifier l'image
 void MainWindow::on_pBControleImage_clicked()
 {
     if(isConnected){
