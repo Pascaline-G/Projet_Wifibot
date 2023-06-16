@@ -8,6 +8,7 @@
 #include <QWebEngineView>
 #include <QWebEngineSettings>
 #include <QKeyEvent>
+#include "./controleimage.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -42,6 +43,8 @@ private slots:
     void on_pBMoveCamDown_clicked();
 
     void on_pBMoveCamLeft_clicked();
+
+    void on_pBControleImage_clicked();
 
 protected:
     void timerEvent(QTimerEvent *event);

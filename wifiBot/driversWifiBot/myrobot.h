@@ -38,7 +38,7 @@ public:
     QByteArray DataReceived;
     QMutex Mutex;
 
-    void goForward(char speed);
+    void goForward(unsigned char speed);
     void goBackward(char speed);
     void goRight(char speed);
     void goLeft(char speed);
@@ -62,7 +62,7 @@ public slots:
     void MyTimerSlot();
 
 private:
-    short Crc16(char *tab, unsigned char size) const;
+    unsigned short Crc16(unsigned char *tab, unsigned char size) const;
     QNetworkAccessManager *manager;
     QTcpSocket *socket;
     QTimer *TimerEnvoi;
