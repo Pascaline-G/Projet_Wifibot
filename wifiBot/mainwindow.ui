@@ -94,6 +94,20 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Puissance :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_puissance">
+         <property name="text">
+          <string>(0, 0)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="label_3">
          <property name="text">
           <string>Vitesse : </string>
@@ -103,7 +117,7 @@
        <item>
         <widget class="QLabel" name="label_vitesse">
          <property name="text">
-          <string>0</string>
+          <string>(0m/s, 0m/s)</string>
          </property>
         </widget>
        </item>
@@ -350,7 +364,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

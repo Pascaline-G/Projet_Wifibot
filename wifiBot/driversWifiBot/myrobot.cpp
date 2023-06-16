@@ -121,7 +121,7 @@ void MyRobot::stop(){
 }
 
 //transform data received into struct
-MyRobotData MyRobot::readData() const {
+MyRobotData MyRobot::readData() {
     QByteArray sbuf = DataReceived;
     MyRobotData robotData = {};
 
@@ -137,8 +137,9 @@ MyRobotData MyRobot::readData() const {
     robotData.dataL.IR = sbuf[3];
     robotData.dataL.IR2 = sbuf[4];
 
-    robotData.dataL.previousOdometry = robotData.dataL.odometry;
+    robotData.dataL.previousOdometry = this->previousOdometryL;
     robotData.dataL.odometry = ((((long)sbuf[8] << 24))+(((long)sbuf[7] << 16))+(((long)sbuf[6] << 8))+((long)sbuf[5]));
+    this->previousOdometryL = robotData.dataL.odometry;
 
     //Right Side
     robotData.dataR.speedFront= (int) (sbuf[10] << 8) + sbuf[9];
@@ -148,8 +149,9 @@ MyRobotData MyRobot::readData() const {
     robotData.dataR.IR = sbuf[11];
     robotData.dataR.IR2 = sbuf[12];
 
-    robotData.dataR.previousOdometry = robotData.dataR.odometry;
+    robotData.dataR.previousOdometry = this->previousOdometryR;
     robotData.dataR.odometry = ((((long)sbuf[16] << 24))+(((long)sbuf[15] << 16))+(((long)sbuf[14] << 8))+((long)sbuf[13]));
+    this->previousOdometryR = robotData.dataR.odometry;
 
     return robotData;
 }

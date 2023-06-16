@@ -175,10 +175,16 @@ void MainWindow::updateDisplayDataRobot() {
     if(isConnected) {
         MyRobotData robotData = robot.readData();
 
+        QString puissanceL = QString::number(robotData.dataL.speedFront);
+        QString puissanceR = QString::number(robotData.dataR.speedFront);
+        this->ui->label_puissance->setText("(" + puissanceL + ", " + puissanceR +  ")");
+
+        //normalize bat level
         float batLevel = (robotData.batLevel / 255.0) * 100.0;
         QString bat = QString::number(batLevel);
         this->ui->label_bat->setText(bat);
 
+        //compute the speed with odometrie
         long odo_diff_l = robotData.dataL.odometry - robotData.dataL.previousOdometry;
         long odo_diff_r = robotData.dataR.odometry - robotData.dataR.previousOdometry;
         float time = 0.1; //100ms

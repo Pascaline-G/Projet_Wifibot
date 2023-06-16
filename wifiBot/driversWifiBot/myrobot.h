@@ -50,7 +50,7 @@ public:
     void MoveCamUp();
     void MoveCamDown();
 
-    MyRobotData readData() const;
+    MyRobotData readData();
 
 signals:
     void updateUI(const QByteArray Data);
@@ -66,6 +66,8 @@ private:
     QNetworkAccessManager *manager;
     QTcpSocket *socket;
     QTimer *TimerEnvoi;
+    long previousOdometryL;
+    long previousOdometryR;
 };
 
 #endif // MYROBOT_H
