@@ -46,16 +46,16 @@ bool MyRobot::doConnect(QString address, int port) {
 }
 
 //robot goes straight fordward
-void MyRobot::goForward(char speed) {
+void MyRobot::goForward(unsigned char speed) {
     DataToSend[0] = 0xFF; //Const
     DataToSend[1] = 0x07; //Const
-    DataToSend[2] = speed; //Right speed
-    DataToSend[3] = speed; //Right speed
+    DataToSend[2] = speed; //Left speed
+    DataToSend[3] = 0; //Left speed
     DataToSend[4] = speed; //Right speed
-    DataToSend[5] = speed; //Right speed
+    DataToSend[5] = 0; //Right speed
     DataToSend[6] = 80;     //control the direction 0101 0000
 
-    short crc = Crc16(DataToSend.data() + 1, 6);
+    unsigned short crc = Crc16((unsigned char *)DataToSend.data() + 1, 6);
     DataToSend[7] = crc & 0x00ff;
     DataToSend[8] = (crc & 0xff00)>>8;
 }
@@ -65,28 +65,26 @@ void MyRobot::goBackward(char speed) {
     DataToSend[0] = 0xFF; //Const
     DataToSend[1] = 0x07; //Const
     DataToSend[2] = speed; //Left speed
-    DataToSend[3] = speed; //Left speed
+    DataToSend[3] = 0; //Left speed
     DataToSend[4] = speed; //Right speed
-    DataToSend[5] = speed; //Right speed
+    DataToSend[5] = 0; //Right speed
     DataToSend[6] = 0;      //control the direction 0000 0000
 
-    short crc = Crc16(DataToSend.data() + 1, 6);
+    unsigned short crc = Crc16((unsigned char *)DataToSend.data() + 1, 6);
     DataToSend[7] = crc & 0x00ff;
     DataToSend[8] = (crc & 0xff00)>>8;
-
 }
 
 void MyRobot::goRight(char speed) {
     DataToSend[0] = 0xFF; //Const
     DataToSend[1] = 0x07; //Const
     DataToSend[2] = speed; //Left speed
-    DataToSend[3] = speed; //Left speed
+    DataToSend[3] = 0; //Left speed
     DataToSend[4] = speed; //Right speed
-    DataToSend[5] = speed; //Right speed
+    DataToSend[5] = 0; //Right speed
     DataToSend[6] = 64;     //control the direction 0100 0000
 
-
-    short crc = Crc16(DataToSend.data() + 1, 6);
+    unsigned short crc = Crc16((unsigned char *)DataToSend.data() + 1, 6);
     DataToSend[7] = crc & 0x00ff;
     DataToSend[8] = (crc & 0xff00)>>8;
 }
@@ -95,15 +93,14 @@ void MyRobot::goLeft(char speed) {
     DataToSend[0] = 0xFF; //Const
     DataToSend[1] = 0x07; //Const
     DataToSend[2] = speed; //Left speed
-    DataToSend[3] = speed; //Left speed
+    DataToSend[3] = 0; //Left speed
     DataToSend[4] = speed; //Right speed
-    DataToSend[5] = speed; //Right speed
+    DataToSend[5] = 0; //Right speed
     DataToSend[6] = 16;     //control the direction 0001 0000
 
-    short crc = Crc16(DataToSend.data() + 1, 6);
+    unsigned short crc = Crc16((unsigned char *)DataToSend.data() + 1, 6);
     DataToSend[7] = crc & 0x00ff;
     DataToSend[8] = (crc & 0xff00)>>8;
-
 }
 
 void MyRobot::stop(){
@@ -115,7 +112,7 @@ void MyRobot::stop(){
     DataToSend[5] = 0; //Right speed
     DataToSend[6] = 0; // control the direction 0000 0000
 
-    short crc = Crc16(DataToSend.data() + 1, 6);
+    unsigned short crc = Crc16((unsigned char *)DataToSend.data() + 1, 6);
     DataToSend[7] = crc & 0x00ff;
     DataToSend[8] = (crc & 0xff00)>>8;
 }
@@ -153,7 +150,7 @@ MyRobotData MyRobot::readData() const {
 }
 
 //method to calculate crc. Give by documentation
-short MyRobot::Crc16(char *tab, unsigned char size) const {
+unsigned short MyRobot::Crc16(unsigned char *tab, unsigned char size) const {
     unsigned int crc = 0xFFFF;
     unsigned int polyome = 0xA001;
     unsigned int cptOctet = 0;

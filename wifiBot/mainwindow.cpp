@@ -119,29 +119,33 @@ void MainWindow::show_Message_Notif(QString message)
 //Bouton pressé pour avancer
 void MainWindow::on_pBForward_pressed()
 {
-    robot.goForward(120);
-    robot.MoveCamRight();
+    int vitesse = ui->SliderVitesse->value();
+    qDebug() << "---------------------------------------------Vitesse :" << vitesse;
+    robot.goForward(vitesse);
     qDebug() << "forward pressed";
 }
 
 //Bouton pressé pour tourner à gauche
 void MainWindow::on_pbLeft_pressed()
 {
-    robot.goLeft(120);
+    int vitesse = ui->SliderVitesse->value();
+    robot.goLeft(vitesse);
     qDebug() << "left pressed";
 }
 
 //Bouton pressé pour reculer
 void MainWindow::on_pbBackward_pressed()
 {
-    robot.goBackward(120);
+    int vitesse = ui->SliderVitesse->value();
+    robot.goBackward(vitesse);
     qDebug() << "backward pressed";
 }
 
 //Bouton pressé pour aller à droite
 void MainWindow::on_pbRight_pressed()
 {
-    robot.goRight(120);
+    int vitesse = ui->SliderVitesse->value();
+    robot.goRight(vitesse);
     qDebug() << "right pressed";
 }
 
@@ -244,19 +248,23 @@ void MainWindow::HandleKeyPress(QKeyEvent *event)
     {
     case 16777235:
         qDebug("Go UP");
-        robot.goForward(120);
+        int vitesse = ui->SliderVitesse->value();
+        robot.goForward(vitesse);
         break;
     case 16777237:
         qDebug("Go Down");
-        robot.goBackward(120);
+        int vitesse = ui->SliderVitesse->value();
+        robot.goBackward(vitesse);
         break;
     case Qt::LeftArrow : case 16777234:
+        int vitesse = ui->SliderVitesse->value();
         qDebug("Go left");
-        robot.goLeft(120);
+        robot.goLeft(vitesse);
         break;
     case 16777236:
         qDebug("Go right");
-        robot.goRight(120);
+        int vitesse = ui->SliderVitesse->value();
+        robot.goRight(vitesse);
         break;
     default:
         qDebug("Key pressed not implemented");

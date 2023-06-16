@@ -33,6 +33,8 @@ private slots:
 
     void on_pBPsychdlique_clicked();
 
+    void on_pBReinit_clicked();
+
 private:
     Ui::ControleImage *ui;
     QNetworkAccessManager *manager;

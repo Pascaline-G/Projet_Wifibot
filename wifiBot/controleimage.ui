@@ -199,7 +199,7 @@
   <widget class="QPushButton" name="pBPsychdlique">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>20</x>
      <y>160</y>
      <width>121</width>
      <height>24</height>
@@ -207,6 +207,19 @@
    </property>
    <property name="text">
     <string>Psychédélique</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pBReinit">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>160</y>
+     <width>121</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Réinitialiser</string>
    </property>
   </widget>
  </widget>
