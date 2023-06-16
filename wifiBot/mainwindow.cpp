@@ -189,8 +189,8 @@ void MainWindow::timerEvent(QTimerEvent *event) {
 void MainWindow::updateDisplayDataRobot() {
     if(isConnected) {
         MyRobotData robotData = robot.readData();
-        QString puissanceL = QString::number(robotData.dataL.speedFront);
-        QString puissanceR = QString::number(robotData.dataR.speedFront);
+        QString puissanceL = QString::number(robotData.dataL.speedFront < 0 ? robotData.dataL.speedFront + 240 : robotData.dataL.speedFront);
+        QString puissanceR = QString::number(robotData.dataR.speedFront < 0 ? robotData.dataR.speedFront + 240 : robotData.dataR.speedFront);
         this->ui->label_puissance->setText("(" + puissanceL + ", " + puissanceR +  ")");
 
 

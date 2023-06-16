@@ -126,6 +126,7 @@ MyRobotData MyRobot::readData() {
 
     //Vitesse
     robotData.dataL.speedFront= (int) ((sbuf[1] << 8) + sbuf[0]);
+
     //Normalisation
     if (robotData.dataL.speedFront > 32767)
         robotData.dataL.speedFront = robotData.dataL.speedFront - 65536;
